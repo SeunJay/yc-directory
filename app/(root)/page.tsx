@@ -39,6 +39,7 @@ export default async function Home({
 
         <ul className="mt-7 card_grid">
           {startups.length > 0 ? (
+            // @ts-expect-error: WIP
             startups.map((post) => (
               <StartupCard
                 _id={post._id}
