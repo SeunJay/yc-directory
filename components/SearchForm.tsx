@@ -8,7 +8,6 @@ interface Props {
 }
 
 const SearchForm = ({ query }: Props) => {
-  console.log(query);
   return (
     <Form action={"/"} scroll={false} className="search-form">
       <input

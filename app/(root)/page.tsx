@@ -1,5 +1,7 @@
 import SearchForm from "@/components/SearchForm";
 import StartupCard from "@/components/StartupCard";
+import { sanityFetch, SanityLive } from "@/sanity/lib/live";
+import { STARTUPS_QUERY } from "@/sanity/lib/queries";
 
 export default async function Home({
   searchParams,
@@ -8,22 +10,13 @@ export default async function Home({
 }) {
   const query = (await searchParams).query;
 
-  const posts = [
-    {
-      _id: 1,
-      views: 55,
-      description: "This is a description",
-      category: "Robots",
-      title: "We Robots",
-      image:
-        "https://res.cloudinary.com/dhfsofugy/image/upload/v1722230104/hero-slider-3_ijkyov.webp",
-      author: {
-        _id: 1,
-        name: "John Smith",
-      },
-      createdAt: new Date(),
-    },
-  ];
+  const params = { search: query || null };
+
+  const { data: startups } = await sanityFetch({
+    query: STARTUPS_QUERY,
+    params,
+  });
+
   return (
     <>
       <section className="pink_container">
@@ -45,8 +38,8 @@ export default async function Home({
         </p>
 
         <ul className="mt-7 card_grid">
-          {posts.length > 0 ? (
-            posts.map((post) => (
+          {startups.length > 0 ? (
+            startups.map((post) => (
               <StartupCard
                 _id={post._id}
                 views={post.views}
@@ -55,7 +48,7 @@ export default async function Home({
                 category={post.category}
                 title={post.title}
                 image={post.image}
-                createdAt={post.createdAt}
+                createdAt={post._createdAt}
                 key={post._id}
               />
             ))
@@ -63,6 +56,8 @@ export default async function Home({
             <p className="no-results">No startups found</p>
           )}
         </ul>
+
+        <SanityLive />
       </section>
     </>
   );

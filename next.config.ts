@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /* config options here */
-  dangerouslyAllowSVG: true,
+  // dangerouslyAllowSVG: true,
   images: {
     remotePatterns: [
       {
@@ -10,7 +10,9 @@ const nextConfig: NextConfig = {
         hostname: "*",
       },
     ],
+    dangerouslyAllowSVG: true,
   },
+  reactStrictMode: true,
 };
 
 export default nextConfig;
